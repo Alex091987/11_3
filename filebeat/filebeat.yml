@@ -1,0 +1,14 @@
+filebeat.inputs:
+- type: filestream
+  id: nginx-filestream	
+  enabled: true
+  paths:
+  - /var/log/nginx/*.log
+
+processors:
+- drop_fields: #удаляются системные поля, которые добавил filebeat
+    fields: ["beat", "input_type", "prospector", "input", "host", "agent",
+    "ecs"]
+
+output.logstash:
+  hosts: ["192.168.1.201:5044"]
